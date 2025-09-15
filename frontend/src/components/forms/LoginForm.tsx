@@ -1,12 +1,24 @@
-export default function LoginForm() {
-	
+interface Props {
+	username: string;
+	setUsername: React.Dispatch<React.SetStateAction<string>>;
+	password: string;
+	setPassword:React.Dispatch<React.SetStateAction<string>>;
+}
+export default function LoginForm({username, setUsername, password, setPassword}: Props) {
+	const handleClick = (e: React.FormEvent) => {
+    e.preventDefault(); 
+    console.log("Username:", username);
+    console.log("Password:", password);
+	}
 	return(
-		<form 
+		<form
+			onSubmit={handleClick} 
 			className="flex flex-col w-sm p-14 pt-0 gap-8">
 			<input 
 				type="text"
 				placeholder="Username"
 				required
+				onChange={(e) => setUsername(e.target.value)}
 				className="border-3 p-2 font-semibold 
 									 placeholder-[var(--dali-purple)]
 									 border-[var(--dali-purple)] rounded-[16px]
@@ -16,6 +28,7 @@ export default function LoginForm() {
 				type="password"
 				placeholder="Password"
 				required
+				onChange={(e) => setPassword(e.target.value)}
 				className="border-3 p-2 font-semibold
 								   placeholder-[var(--dali-purple)]
 									 border-[var(--dali-purple)] rounded-[16px]
