@@ -1,9 +1,12 @@
 export default function LoginForm() {
+	
 	return(
-		<form className="flex flex-col w-sm p-14 pt-0 gap-8">
+		<form 
+			className="flex flex-col w-sm p-14 pt-0 gap-8">
 			<input 
 				type="text"
 				placeholder="Username"
+				required
 				className="border-3 p-2 font-semibold 
 									 placeholder-[var(--dali-purple)]
 									 border-[var(--dali-purple)] rounded-[16px]
@@ -12,6 +15,7 @@ export default function LoginForm() {
 			<input 
 				type="password"
 				placeholder="Password"
+				required
 				className="border-3 p-2 font-semibold
 								   placeholder-[var(--dali-purple)]
 									 border-[var(--dali-purple)] rounded-[16px]
