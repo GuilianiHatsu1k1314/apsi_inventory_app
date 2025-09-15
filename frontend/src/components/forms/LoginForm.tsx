@@ -6,14 +6,16 @@ export default function LoginForm() {
 				placeholder="Username"
 				className="border-3 p-2 font-semibold 
 									 placeholder-[var(--dali-purple)]
-									 border-[var(--dali-purple)] rounded-[16px]"
+									 border-[var(--dali-purple)] rounded-[16px]
+									 focus:border-violet-600 focus:outline-none"
 			/>
 			<input 
 				type="password"
 				placeholder="Password"
 				className="border-3 p-2 font-semibold
 								   placeholder-[var(--dali-purple)]
-									 border-[var(--dali-purple)] rounded-[16px]"
+									 border-[var(--dali-purple)] rounded-[16px]
+									 focus:border-violet-600 focus:outline-none"
 			/>
 			<button 
 				type="submit"
