@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 interface Props {
 	username: string;
 	setUsername: React.Dispatch<React.SetStateAction<string>>;
@@ -5,10 +6,12 @@ interface Props {
 	setPassword:React.Dispatch<React.SetStateAction<string>>;
 }
 export default function LoginForm({username, setUsername, password, setPassword}: Props) {
+	const navigate = useNavigate();
 	const handleClick = (e: React.FormEvent) => {
     e.preventDefault(); 
     console.log("Username:", username);
     console.log("Password:", password);
+		navigate('/app');
 	}
 	return(
 		<form
