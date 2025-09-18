@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage";
 import { InventoryAppPage } from "./pages/InventoryAppPage";
 import { Dashboard } from "./pages/Admin/Dashboard";
+import { Customer } from "./pages/Admin/Customer";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       { 
         index: true,
         element: <Dashboard /> 
+      },
+      {
+        path: "customer",
+        element: <Customer />
       }
     ],
   },
