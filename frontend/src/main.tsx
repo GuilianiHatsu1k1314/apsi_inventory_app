@@ -7,6 +7,7 @@ import { InventoryAppPage } from "./pages/InventoryAppPage";
 import { Dashboard } from "./pages/Admin/Dashboard";
 import { Customer } from "./pages/Admin/Customer";
 import WarehouseModule from "./pages/Admin/Warehouse";
+import { Distributor } from "./pages/Admin/Distributor";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "warehouse",
         element: <WarehouseModule />
+      },
+      {
+        path: "distributor",
+        element: <Distributor />
       }
     ],
   },
