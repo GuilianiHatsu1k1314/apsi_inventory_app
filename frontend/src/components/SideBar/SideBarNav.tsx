@@ -46,8 +46,19 @@ export const NavBar = () => {
               )
           )}
 
-          <li className="pl-5 text-xl mt-16 hover:bg-[var(--dali-purple)] hover:text-white">
-            Reports
+          <li>
+            <NavLink 
+              to="report"
+              className={({ isActive }) =>
+                      `block pl-5 text-xl py-2 ${
+                        isActive
+                          ? "bg-[var(--dali-purple)] text-white"
+                          : "hover:bg-[var(--dali-purple)] hover:text-white"
+                      }`
+                    }
+            >
+              Reports
+            </NavLink>
           </li>
           <li
             onClick={handleLogout}
