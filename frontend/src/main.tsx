@@ -9,11 +9,16 @@ import { Customer } from "./pages/Admin/Customer";
 import WarehouseModule from "./pages/Admin/Warehouse";
 import { Distributor } from "./pages/Admin/Distributor";
 import { AccountingPage } from "./pages/Admin/Accounting";
+import { RegisterPage } from "./pages/RegisterPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LoginPage />,
+  },
+  {
+    path: "/register",              
+    element: <RegisterPage />,
   },
   { 
     path: "app",
