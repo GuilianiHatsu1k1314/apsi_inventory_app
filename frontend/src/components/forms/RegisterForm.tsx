@@ -1,65 +1,78 @@
-import { useNavigate } from "react-router-dom";
-//copied the style of LoginForm.tsx
 interface Props {
-  username: string;
-  setUsername: React.Dispatch<React.SetStateAction<string>>;
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
   password: string;
   setPassword: React.Dispatch<React.SetStateAction<string>>;
+  role: string;
+  setRole: React.Dispatch<React.SetStateAction<string>>;
+  onSubmit: () => void;
+  loading: boolean;
+  error: string | null;
 }
 
 export default function RegisterForm({
-  username,
-  setUsername,
+  email,
+  setEmail,
   password,
   setPassword,
+  role,
+  setRole,
+  onSubmit,
+  loading,
+  error,
 }: Props) {
-  const navigate = useNavigate();
-
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!username.trim() || !password.trim()) {
-      alert("Please fill out all fields");
-      return;
-    }
-
-    alert(`Account for "${username}" created (mock). Please log in.`);
-    navigate("/"); //back to login
-  };
-
   return (
     <form
-      onSubmit={handleRegister}
-      className="flex flex-col w-sm p-14 pt-0 gap-8"
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit();
+      }}
+      className="flex flex-col w-sm p-14 pt-0 gap-6"
     >
+      {/* Email */}
       <input
-        type="text"
-        placeholder="Username"
+        type="email"
+        placeholder="Email"
         required
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="border-3 p-2 font-semibold 
-                   placeholder-[var(--dali-purple)]
-                   border-[var(--dali-purple)] rounded-[16px]
-                   focus:border-violet-600 focus:outline-none"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="border-2 p-2 rounded-lg"
       />
+
+      {/* Password */}
       <input
         type="password"
         placeholder="Password"
         required
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="border-3 p-2 font-semibold
-                   placeholder-[var(--dali-purple)]
-                   border-[var(--dali-purple)] rounded-[16px]
-                   focus:border-violet-600 focus:outline-none"
+        className="border-2 p-2 rounded-lg"
       />
+
+      {/* Role Dropdown */}
+      <select
+        required
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+        className="border-2 p-2 rounded-lg"
+      >
+        <option value="">-- Select Role --</option>
+        <option value="CSR">CSR</option>
+        <option value="Team Leader">Team Leader</option>
+        <option value="Accounting">Accounting</option>
+        <option value="Warehouse">Warehouse</option>
+      </select>
+
+      {/* Error Display */}
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+
+      {/* Submit Button */}
       <button
         type="submit"
-        className="w-34 px-4 py-3 self-center bg-green-500 text-white font-semibold rounded-[17px]
-                   hover:bg-green-600"
+        disabled={loading}
+        className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
       >
-        Register
+        {loading ? "Registering..." : "Registered!"}
       </button>
     </form>
   );
