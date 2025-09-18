@@ -6,6 +6,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { InventoryAppPage } from "./pages/InventoryAppPage";
 import { Dashboard } from "./pages/Admin/Dashboard";
 import { Customer } from "./pages/Admin/Customer";
+import WarehouseModule from "./pages/Admin/Warehouse";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "customer",
         element: <Customer />
+      },
+      {
+        path: "warehouse",
+        element: <WarehouseModule />
       }
     ],
   },
