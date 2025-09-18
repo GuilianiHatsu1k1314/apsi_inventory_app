@@ -4,7 +4,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage";
 import { InventoryAppPage } from "./pages/InventoryAppPage";
-import { Dashboard } from "./pages/Dashboard";
+import { Dashboard } from "./pages/Admin/Dashboard";
 
 const router = createBrowserRouter([
   {
