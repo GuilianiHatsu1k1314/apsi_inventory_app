@@ -2,8 +2,8 @@ import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-import InventoryAppPage from './pages/InventoryAppPage';
+import {LoginPage} from './pages/LoginPage';
+import {InventoryAppPage} from './pages/InventoryAppPage';
 
 const router = createBrowserRouter([
   {
