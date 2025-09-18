@@ -8,6 +8,7 @@ import { Dashboard } from "./pages/Admin/Dashboard";
 import { Customer } from "./pages/Admin/Customer";
 import WarehouseModule from "./pages/Admin/Warehouse";
 import { Distributor } from "./pages/Admin/Distributor";
+import { AccountingPage } from "./pages/Admin/Accounting";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "distributor",
         element: <Distributor />
+      },
+      {
+        path: "accounting",
+        element: <AccountingPage />
       }
     ],
   },
