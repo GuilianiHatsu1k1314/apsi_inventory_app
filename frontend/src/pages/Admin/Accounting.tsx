@@ -67,22 +67,6 @@ export const AccountingPage: React.FC = () => {
     }
   }, [orders]);
 
-  const handleQuantityChange = (itemId: number, qty: number) => {
-    if (!selectedOrder) return;
-    setOrders((prev) =>
-      prev.map((order) =>
-        order.id === selectedOrder.id
-          ? {
-              ...order,
-              items: order.items.map((item) =>
-                item.id === itemId ? { ...item, quantity: qty } : item
-              ),
-            }
-          : order
-      )
-    );
-  };
-
   const total = selectedOrder
     ? selectedOrder.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
     : 0;
