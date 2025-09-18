@@ -10,6 +10,7 @@ import WarehouseModule from "./pages/Admin/Warehouse";
 import { Distributor } from "./pages/Admin/Distributor";
 import { AccountingPage } from "./pages/Admin/Accounting";
 import { RegisterPage } from "./pages/RegisterPage";
+import { CSRPage } from "./pages/Admin/CustomerService";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,11 @@ const router = createBrowserRouter([
       {
         path: "accounting",
         element: <AccountingPage />
-      }
+      },
+      {
+        path: "customer-service",
+        element: <CSRPage />
+      },
     ],
   },
   {

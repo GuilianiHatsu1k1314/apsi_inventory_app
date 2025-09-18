@@ -82,6 +82,20 @@ export const NavBar = () => {
               Accounting
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/app/customer-service"
+              className={({ isActive }) =>
+                `block pl-5 text-xl py-2 ${
+                  isActive
+                    ? "bg-[var(--dali-purple)] text-white"
+                    : "hover:bg-[var(--dali-purple)] hover:text-white"
+                }`
+              }
+            >
+              Customer Service
+            </NavLink>
+          </li>
           <li className="pl-5 text-xl mt-16 hover:bg-[var(--dali-purple)] hover:text-white">
             Reports
           </li>
