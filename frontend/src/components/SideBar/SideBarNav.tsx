@@ -1,16 +1,73 @@
-import {Link} from 'react-router-dom';
+import { NavLink } from "react-router-dom";
+
 export const NavBar = () => {
-	return(
-		<aside className="h-full w-3xs bg-gray-200">
-			<nav className="pt-5">
-				<ul>
-					<li className="hover:bg-[var(--dali-purple)] hover:text-white"><Link to="/app" className='block'>Dashboard</Link></li>
-					<li className="hover:bg-[var(--dali-purple)] hover:text-white"><Link to="/app/customer" className='block'>Customer</Link></li>
-					<li className="hover:bg-[var(--dali-purple)] hover:text-white"><Link to="/app/distributor" className='block'>Distributor</Link></li>
-					<li className="hover:bg-[var(--dali-purple)] hover:text-white"><Link to="/app/warehouse" className='block'>Warehouse Module</Link></li>
-					<li className="mt-16 hover:bg-[var(--dali-purple)] hover:text-white">Reports</li>
-				</ul>
-			</nav>
-		</aside>
-	);
-}
+  return (
+    <aside className="h-full w-3xs bg-gray-200">
+      <nav className="pt-5">
+        <ul>
+          <li>
+            <NavLink
+              to="/app"
+              end
+              className={({ isActive }) =>
+                `block pl-5 text-xl py-2 ${
+                  isActive
+                    ? "bg-[var(--dali-purple)] text-white"
+                    : "hover:bg-[var(--dali-purple)] hover:text-white"
+                }`
+              }
+            >
+              Dashboard
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/app/customer"
+              className={({ isActive }) =>
+                `block pl-5 text-xl py-2 ${
+                  isActive
+                    ? "bg-[var(--dali-purple)] text-white"
+                    : "hover:bg-[var(--dali-purple)] hover:text-white"
+                }`
+              }
+            >
+              Customer
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/app/distributor"
+              className={({ isActive }) =>
+                `block pl-5 text-xl py-2 ${
+                  isActive
+                    ? "bg-[var(--dali-purple)] text-white"
+                    : "hover:bg-[var(--dali-purple)] hover:text-white"
+                }`
+              }
+            >
+              Distributor
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/app/warehouse"
+              className={({ isActive }) =>
+                `block pl-5 text-xl py-2 ${
+                  isActive
+                    ? "bg-[var(--dali-purple)] text-white"
+                    : "hover:bg-[var(--dali-purple)] hover:text-white"
+                }`
+              }
+            >
+              Warehouse Module
+            </NavLink>
+          </li>
+          <li className="pl-5 text-xl mt-16 hover:bg-[var(--dali-purple)] hover:text-white">
+            Reports
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  );
+};
+	
