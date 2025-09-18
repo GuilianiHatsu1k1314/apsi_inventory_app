@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { mockUsers } from "./MockUsers";
 interface Props {
 	username: string;
 	setUsername: React.Dispatch<React.SetStateAction<string>>;
@@ -8,10 +9,21 @@ interface Props {
 export default function LoginForm({username, setUsername, password, setPassword}: Props) {
 	const navigate = useNavigate();
 	const handleClick = (e: React.FormEvent) => {
+		
     e.preventDefault(); 
-    console.log("Username:", username);
-    console.log("Password:", password);
-		navigate('/app');
+    const user = mockUsers.find(
+      (u) => u.username === username && u.password === password
+    );
+
+    if (!user) {
+      alert("Invalid username or password");
+      return;
+    }
+	switch (user.role) {
+      case "Admin":
+        navigate('/app');
+        break;
+	}
 	}
 	return(
 		<form
