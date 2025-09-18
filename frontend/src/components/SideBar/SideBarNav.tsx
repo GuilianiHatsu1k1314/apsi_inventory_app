@@ -5,7 +5,7 @@ export const NavBar = () => {
 			<nav className="pt-5">
 				<ul>
 					<li className="hover:bg-[var(--dali-purple)] hover:text-white"><Link to="/app" className='block'>Dashboard</Link></li>
-					<li className="hover:bg-[var(--dali-purple)] hover:text-white"><Link to="/app/customer">Customer</Link></li>
+					<li className="hover:bg-[var(--dali-purple)] hover:text-white"><Link to="/app/customer" className='block'>Customer</Link></li>
 					<li className="hover:bg-[var(--dali-purple)] hover:text-white">Distributor</li>
 					<li className="hover:bg-[var(--dali-purple)] hover:text-white">Warehouse Module</li>
 					<li className="mt-16 hover:bg-[var(--dali-purple)] hover:text-white">Reports</li>
