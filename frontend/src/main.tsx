@@ -12,6 +12,7 @@ import { AccountingPage } from "./pages/Admin/Accounting";
 import { RegisterPage } from "./pages/RegisterPage";
 import { CSRPage } from "./pages/Admin/CustomerService";
 import { TeamLeaderPage } from "./pages/Admin/TeamLead";
+import { ReportsPage } from "./pages/Admin/Reports";
 
 const router = createBrowserRouter([
   {
@@ -50,9 +51,13 @@ const router = createBrowserRouter([
         path: "customer-service",
         element: <CSRPage />
       },
-            {
+      {
         path: "team-lead",
         element: <TeamLeaderPage />
+      },
+      {
+        path: "report",
+        element: <ReportsPage />
       },
     ],
   },
