@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { supabase } from "../../lib/SupabaseClient";
 
-// Types
 interface OrderItem {
   id: number;
   name: string;
@@ -30,40 +30,44 @@ export const AccountingPage: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [invoice, setInvoice] = useState<Invoice | null>(null);
 
-  // Simulate fetching orders from DB
+  //Fetch approved orders
   useEffect(() => {
     const fetchOrders = async () => {
-      const data: Order[] = [
-        {
-          id: 1,
-          customer: "Juan Dela Cruz",
-          items: [
-            { id: 1, name: "Apple", quantity: 2, price: 100 },
-            { id: 2, name: "Orange", quantity: 3, price: 80 },
-          ],
-          status: "Approved",
-        },
-        {
-          id: 2,
-          customer: "Maria Clara",
-          items: [{ id: 1, name: "Banana", quantity: 5, price: 50 }],
-          status: "Pending Approval",
-        },
-      ];
-      setOrders(data);
+      const { data: ordersData, error } = await supabase
+        .from("orders")
+        .select("*")
+        .eq("status", "Approved");
+
+      if (error) {
+        console.error("Error fetching orders:", error.message);
+        return;
+      }
+
+      if (!ordersData) return;
+
+      //parse items in JSON
+      const parsedOrders: Order[] = ordersData.map((o: any) => ({
+        ...o,
+        items:
+          typeof o.items === "string"
+            ? JSON.parse(o.items)
+            : Array.isArray(o.items)
+            ? o.items
+            : [],
+      }));
+
+      setOrders(parsedOrders);
     };
 
     fetchOrders();
   }, []);
 
-  const approvedOrders = orders.filter((o) => o.status === "Approved");
-  const selectedOrder = approvedOrders.find((o) => o.id === selectedOrderId) || null;
+  const selectedOrder = orders.find((o) => o.id === selectedOrderId) || null;
 
+  //Auto-select first order, for easy flow
   useEffect(() => {
-    if (approvedOrders.length > 0) {
-      setSelectedOrderId(approvedOrders[0].id);
-    } else {
-      setSelectedOrderId(null);
+    if (orders.length > 0) {
+      setSelectedOrderId(orders[0].id);
     }
   }, [orders]);
 
@@ -71,8 +75,33 @@ export const AccountingPage: React.FC = () => {
     ? selectedOrder.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
     : 0;
 
-  const handleCharge = () => {
+  const handleCharge = async () => {
     if (!selectedOrder) return;
+
+    //Insert payment record
+    const { error: payError } = await supabase.from("payments").insert([
+      {
+        order_id: selectedOrder.id,
+        amount: total,
+        payment_method: paymentMethod,
+      },
+    ]);
+
+    if (payError) {
+      console.error("Error inserting payment:", payError.message);
+      return;
+    }
+
+    //Updates order status
+    const { error: updateError } = await supabase
+      .from("orders")
+      .update({ status: "Charged" })
+      .eq("id", selectedOrder.id);
+
+    if (updateError) {
+      console.error("Error updating order:", updateError.message);
+      return;
+    }
 
     const newInvoice: Invoice = {
       orderId: selectedOrder.id,
@@ -85,12 +114,9 @@ export const AccountingPage: React.FC = () => {
 
     setInvoice(newInvoice);
 
-    // Update order status in "DB"
-    setOrders((prev) =>
-      prev.map((order) =>
-        order.id === selectedOrder.id ? { ...order, status: "Charged" } : order
-      )
-    );
+    //Remove order from the list
+    setOrders((prev) => prev.filter((o) => o.id !== selectedOrder.id));
+    setSelectedOrderId(null);
   };
 
   return (
@@ -100,11 +126,10 @@ export const AccountingPage: React.FC = () => {
       <div className="max-w-xl bg-white shadow-lg rounded-2xl p-6">
         <h2 className="text-xl font-bold mb-4">Charge Approved Orders</h2>
 
-        {approvedOrders.length === 0 ? (
+        {orders.length === 0 ? (
           <p>No approved orders to charge.</p>
         ) : (
           <>
-            {/* Order Selector */}
             <div className="mb-4">
               <label className="block mb-1 font-semibold">Select Order</label>
               <select
@@ -112,7 +137,7 @@ export const AccountingPage: React.FC = () => {
                 onChange={(e) => setSelectedOrderId(Number(e.target.value))}
                 className="border rounded-lg p-2 w-full"
               >
-                {approvedOrders.map((o) => (
+                {orders.map((o) => (
                   <option key={o.id} value={o.id}>
                     {o.customer} (Order #{o.id})
                   </option>
@@ -120,7 +145,6 @@ export const AccountingPage: React.FC = () => {
               </select>
             </div>
 
-            {/* Items Table */}
             {selectedOrder && (
               <table className="w-full text-left border mb-4">
                 <thead>
@@ -135,23 +159,22 @@ export const AccountingPage: React.FC = () => {
                   {selectedOrder.items.map((item) => (
                     <tr key={item.id} className="border-t">
                       <td className="p-2">{item.name}</td>
-                                <td className="p-2">{item.quantity}</td>
-
+                      <td className="p-2">{item.quantity}</td>
                       <td className="p-2">₱{item.price.toFixed(2)}</td>
-                      <td className="p-2">₱{(item.price * item.quantity).toFixed(2)}</td>
+                      <td className="p-2">
+                        ₱{(item.price * item.quantity).toFixed(2)}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             )}
 
-            {/* Total */}
             <div className="flex justify-between items-center mb-4">
               <span className="font-semibold">Total:</span>
               <span className="text-lg font-bold">₱{total.toFixed(2)}</span>
             </div>
 
-            {/* Payment Method */}
             <div className="mb-4">
               <label className="block mb-1 font-semibold">Payment Method</label>
               <select
@@ -166,7 +189,6 @@ export const AccountingPage: React.FC = () => {
               </select>
             </div>
 
-            {/* Charge Button */}
             <button
               onClick={handleCharge}
               className="w-full bg-purple-600 text-white p-3 rounded-lg hover:bg-purple-700"
@@ -177,10 +199,9 @@ export const AccountingPage: React.FC = () => {
         )}
       </div>
 
-      {/* Show Invoice */}
       {invoice && (
         <div className="mt-8 p-6 bg-green-100 rounded-lg w-full max-w-xl">
-          <h3 className="font-bold mb-2">Invoice Created ✅</h3>
+          <h3 className="font-bold mb-2">Invoice Created</h3>
           <p>
             Customer <b>{invoice.customer}</b> was charged{" "}
             <b>₱{invoice.total.toFixed(2)}</b> via <b>{invoice.paymentMethod}</b>.

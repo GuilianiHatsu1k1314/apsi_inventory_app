@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { supabase } from "../../lib/SupabaseClient";
 
 // Inventory type
 interface InventoryItem {
@@ -13,11 +14,27 @@ interface ReceivedItem {
   id: number;
   name: string;
   quantity: number;
+  price: number; // <-- added price
   status: "Pending" | "Good" | "Spoiled" | "Rejected";
 }
 
+// OrderItem type
+interface OrderItem {
+  id: number;
+  name: string;
+  quantity: number;
+  price: number;
+}
+
+interface Order {
+  id: number;
+  customer: string;
+  items: OrderItem[];
+  status: string;
+}
+
 export const WarehousePage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"inventory" | "received">("inventory");
+  const [activeTab, setActiveTab] = useState<"inventory" | "received" | "orders">("inventory");
 
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
   const [newItemName, setNewItemName] = useState("");
@@ -25,49 +42,127 @@ export const WarehousePage: React.FC = () => {
   const [newItemPrice, setNewItemPrice] = useState(0);
 
   const [receivedGoods, setReceivedGoods] = useState<ReceivedItem[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
 
+  // Fetch inventory + received goods + charged orders
   useEffect(() => {
-    // Mock inventory
-    setInventory([
-      { id: 1, name: "Apple", quantity: 50, price: 100 },
-      { id: 2, name: "Orange", quantity: 40, price: 80 },
-      { id: 3, name: "Banana", quantity: 30, price: 50 },
-    ]);
+    const fetchData = async () => {
+      const { data: inv, error: invErr } = await supabase
+        .from("inventory")
+        .select("*")
+        .order("id");
+      if (!invErr && inv) setInventory(inv as InventoryItem[]);
 
-    // Mock received goods
-    setReceivedGoods([
-      { id: 1, name: "Apple", quantity: 10, status: "Pending" },
-      { id: 2, name: "Orange", quantity: 5, status: "Pending" },
-      { id: 3, name: "Banana", quantity: 8, status: "Pending" },
-    ]);
+      const { data: rec, error: recErr } = await supabase
+        .from("received_goods")
+        .select("*")
+        .order("id");
+      if (!recErr && rec) setReceivedGoods(rec as ReceivedItem[]);
+
+      const { data: ord, error: ordErr } = await supabase
+        .from("orders")
+        .select("*")
+        .eq("status", "Charged")
+        .order("id");
+
+      if (!ordErr && ord) {
+        const safeOrders = ord.map((o: any) => ({
+          ...o,
+          items: typeof o.items === "string" ? JSON.parse(o.items) : o.items,
+        }));
+        setOrders(safeOrders as Order[]);
+      }
+    };
+    fetchData();
   }, []);
 
-  // Inventory editing
-  const handleEditInventory = (id: number, field: "quantity" | "price", value: number) => {
-    setInventory((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, [field]: value } : item))
-    );
-  };
-
-  const addInventory = () => {
+  // Add new inventory item manually
+  const addInventory = async () => {
     if (!newItemName || newItemQty <= 0 || newItemPrice <= 0) return;
-    const newItem: InventoryItem = {
-      id: inventory.length + 1,
-      name: newItemName,
-      quantity: newItemQty,
-      price: newItemPrice,
-    };
-    setInventory((prev) => [...prev, newItem]);
+    const { data, error } = await supabase
+      .from("inventory")
+      .insert([{ name: newItemName, quantity: newItemQty, price: newItemPrice }])
+      .select();
+
+    if (error) {
+      console.error("Error adding inventory:", error.message);
+      return;
+    }
+
+    if (data) setInventory((prev) => [...prev, data[0] as InventoryItem]);
     setNewItemName("");
     setNewItemQty(0);
     setNewItemPrice(0);
   };
 
-  // Update received goods status
-  const updateReceivedStatus = (id: number, status: "Good" | "Spoiled" | "Rejected") => {
+  // Update received goods status + move into inventory if good
+  const updateReceivedStatus = async (
+    id: number,
+    status: "Good" | "Spoiled" | "Rejected"
+  ) => {
+    const { data: updated, error } = await supabase
+      .from("received_goods")
+      .update({ status })
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Error updating received goods:", error.message);
+      return;
+    }
+
+    if (status === "Good" && updated) {
+      const { name, quantity, price } = updated;
+
+      // Check if already in inventory
+      const { data: existing } = await supabase
+        .from("inventory")
+        .select("*")
+        .eq("name", name)
+        .maybeSingle();
+
+      if (existing) {
+        const newQty = existing.quantity + quantity;
+        const newPrice = price || existing.price; // preserve price if exists
+        await supabase.from("inventory").update({ quantity: newQty, price: newPrice }).eq("id", existing.id);
+        setInventory((prev) =>
+          prev.map((i) => (i.id === existing.id ? { ...i, quantity: newQty, price: newPrice } : i))
+        );
+      } else {
+        const { data: newInv } = await supabase
+          .from("inventory")
+          .insert([{ name, quantity, price }])
+          .select();
+
+        if (newInv) setInventory((prev) => [...prev, newInv[0] as InventoryItem]);
+      }
+    }
+
+    // Local state update
     setReceivedGoods((prev) =>
       prev.map((item) => (item.id === id ? { ...item, status } : item))
     );
+  };
+
+  // Fulfill order → subtract from inventory
+  const fulfillOrder = async (order: Order) => {
+    for (const item of order.items) {
+      const invItem = inventory.find((inv) => inv.name === item.name);
+      if (invItem) {
+        const newQty = Math.max(invItem.quantity - item.quantity, 0);
+        await supabase.from("inventory").update({ quantity: newQty }).eq("id", invItem.id);
+        setInventory((prev) =>
+          prev.map((i) => (i.id === invItem.id ? { ...i, quantity: newQty } : i))
+        );
+      }
+    }
+
+    // Mark order fulfilled
+    await supabase.from("orders").update({ status: "Fulfilled" }).eq("id", order.id);
+
+    // Remove from local list
+    setOrders((prev) => prev.filter((o) => o.id !== order.id));
   };
 
   return (
@@ -77,20 +172,22 @@ export const WarehousePage: React.FC = () => {
       {/* Tabs */}
       <div className="flex gap-4 mb-6">
         <button
-          className={`px-4 py-2 rounded ${
-            activeTab === "inventory" ? "bg-purple-600 text-white" : "bg-gray-200"
-          }`}
+          className={`px-4 py-2 rounded ${activeTab === "inventory" ? "bg-purple-600 text-white" : "bg-gray-200"}`}
           onClick={() => setActiveTab("inventory")}
         >
           Inventory Management
         </button>
         <button
-          className={`px-4 py-2 rounded ${
-            activeTab === "received" ? "bg-purple-600 text-white" : "bg-gray-200"
-          }`}
+          className={`px-4 py-2 rounded ${activeTab === "received" ? "bg-purple-600 text-white" : "bg-gray-200"}`}
           onClick={() => setActiveTab("received")}
         >
           Received Goods
+        </button>
+        <button
+          className={`px-4 py-2 rounded ${activeTab === "orders" ? "bg-purple-600 text-white" : "bg-gray-200"}`}
+          onClick={() => setActiveTab("orders")}
+        >
+          Fulfill Orders
         </button>
       </div>
 
@@ -110,26 +207,8 @@ export const WarehousePage: React.FC = () => {
               {inventory.map((item) => (
                 <tr key={item.id} className="border-t">
                   <td className="p-2">{item.name}</td>
-                  <td className="p-2">
-                    <input
-                      type="number"
-                      value={item.quantity}
-                      onChange={(e) =>
-                        handleEditInventory(item.id, "quantity", Number(e.target.value))
-                      }
-                      className="border p-1 rounded w-20"
-                    />
-                  </td>
-                  <td className="p-2">
-                    <input
-                      type="number"
-                      value={item.price}
-                      onChange={(e) =>
-                        handleEditInventory(item.id, "price", Number(e.target.value))
-                      }
-                      className="border p-1 rounded w-24"
-                    />
-                  </td>
+                  <td className="p-2">{item.quantity}</td>
+                  <td className="p-2">₱{item.price.toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>
@@ -178,6 +257,7 @@ export const WarehousePage: React.FC = () => {
               <tr className="bg-gray-100">
                 <th className="p-2">Item</th>
                 <th className="p-2">Qty</th>
+                <th className="p-2">Price</th>
                 <th className="p-2">Status</th>
                 <th className="p-2">Action</th>
               </tr>
@@ -187,6 +267,7 @@ export const WarehousePage: React.FC = () => {
                 <tr key={item.id} className="border-t">
                   <td className="p-2">{item.name}</td>
                   <td className="p-2">{item.quantity}</td>
+                  <td className="p-2">₱{item.price.toFixed(2)}</td>
                   <td className="p-2">{item.status}</td>
                   <td className="p-2 flex gap-2">
                     {item.status === "Pending" && (
@@ -216,6 +297,34 @@ export const WarehousePage: React.FC = () => {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* Fulfill Orders Tab */}
+      {activeTab === "orders" && (
+        <div className="bg-white shadow-lg rounded-lg p-6">
+          <h2 className="text-xl font-bold mb-4">Orders to Fulfill</h2>
+          {orders.length === 0 && <p>No charged orders to fulfill.</p>}
+          {orders.map((order) => (
+            <div key={order.id} className="border p-3 mb-3 rounded">
+              <p>
+                <b>Customer:</b> {order.customer}
+              </p>
+              <ul className="list-disc pl-5">
+                {order.items.map((i) => (
+                  <li key={i.id}>
+                    {i.name} x {i.quantity}
+                  </li>
+                ))}
+              </ul>
+              <button
+                className="mt-2 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                onClick={() => fulfillOrder(order)}
+              >
+                Fulfill Order
+              </button>
+            </div>
+          ))}
         </div>
       )}
     </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { supabase } from "../../lib/SupabaseClient";
 
-// Local types
+//Local types
 interface OrderItem {
   id: number;
   name: string;
@@ -17,54 +18,74 @@ interface Order {
 
 export const TeamLeaderPage: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Simulate fetching orders from DB / API
+  //This fetches the orders from Supabase
   useEffect(() => {
     const fetchOrders = async () => {
-      // Replace this with your actual API call
-      const data: Order[] = [
-        {
-          id: 1,
-          customer: "Juan Dela Cruz",
-          items: [
-            { id: 1, name: "Apple", quantity: 2, price: 100 },
-            { id: 2, name: "Orange", quantity: 3, price: 80 },
-          ],
-          status: "Pending Approval",
-        },
-        {
-          id: 2,
-          customer: "Maria Clara",
-          items: [{ id: 1, name: "Banana", quantity: 5, price: 50 }],
-          status: "Pending Approval",
-        },
-      ];
-      setOrders(data);
+      setLoading(true);
+
+      const { data, error } = await supabase
+        .from("orders")
+        .select("*")
+        .order("id", { ascending: true });
+
+      if (error) {
+        console.error("Error fetching orders:", error.message);
+      } else {
+        //Ensure items are always an array
+        const safeOrders = (data || []).map((o: any) => ({
+          ...o,
+          items:
+            typeof o.items === "string"
+              ? JSON.parse(o.items) //if saved as string
+              : Array.isArray(o.items)
+              ? o.items
+              : [], //fallback
+        }));
+        setOrders(safeOrders as Order[]);
+      }
+
+      setLoading(false);
     };
 
     fetchOrders();
   }, []);
 
-  const updateOrderStatus = (orderId: number, status: Order["status"]) => {
-    // In real app, send PATCH/PUT to backend to update DB
-    setOrders(prev =>
-      prev.map(o => (o.id === orderId ? { ...o, status } : o))
+  //Approve / reject the order - Team Leader
+  const updateOrderStatus = async (orderId: number, status: Order["status"]) => {
+    const { error } = await supabase
+      .from("orders")
+      .update({ status })
+      .eq("id", orderId);
+
+    if (error) {
+      console.error("Error updating order status:", error.message);
+      return;
+    }
+
+    //This updates the local state
+    setOrders((prev) =>
+      prev.map((o) => (o.id === orderId ? { ...o, status } : o))
     );
   };
 
-  const pendingOrders = orders.filter(o => o.status === "Pending Approval");
+  const pendingOrders = orders.filter((o) => o.status === "Pending Approval");
 
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">Team Leader: Approve Orders</h1>
 
-      {pendingOrders.length === 0 && <p>No pending orders.</p>}
+      {loading && <p>Loading orders...</p>}
+      {!loading && pendingOrders.length === 0 && <p>No pending orders.</p>}
 
-      {pendingOrders.map(order => (
+      {pendingOrders.map((order) => (
         <div key={order.id} className="border p-3 mb-3 rounded">
-          <p><b>Customer:</b> {order.customer}</p>
+          <p>
+            <b>Customer:</b> {order.customer}
+          </p>
           <ul className="list-disc pl-5">
-            {order.items.map(item => (
+            {order.items.map((item) => (
               <li key={item.id}>
                 {item.name} x {item.quantity} (₱{item.price})
               </li>
