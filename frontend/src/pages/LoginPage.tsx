@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import LoginForm from "../components/forms/LoginForm";
+import logo from '../assets/logo.png'
+import background from '../assets/login-background.png'
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -39,7 +41,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div style={{ backgroundImage: `url(${background})` }} className="flex flex-col justify-center items-center min-h-screen bg-cover bg-center" >
+      <img src={logo} className="h-64 mb-5"/>
       <LoginForm
         username={username}
         setUsername={setUsername}

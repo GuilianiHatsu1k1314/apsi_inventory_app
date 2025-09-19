@@ -51,9 +51,9 @@ export default function LoginForm({
         type="submit"
         disabled={loading}
         className="w-34 px-4 py-3 self-center bg-[var(--dali-purple)] text-white font-semibold rounded-[17px]
-                   hover:bg-violet-600"
+                   hover:bg-violet-600 cursor-pointer"
       >
-        {loading ? "Logging in..." : "Submit"}
+        {loading ? "Logging in..." : "Login"}
       </button>
 
       {error && <p className="text-red-500">{error}</p>}
