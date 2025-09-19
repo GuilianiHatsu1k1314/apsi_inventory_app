@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import LoginForm from "../components/forms/LoginForm";
 import logo from '../assets/logo.png'
@@ -39,7 +39,10 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
-
+  useEffect(()=>{
+    document.title = "Login";
+  },[]);
+  
   return (
     <div style={{ backgroundImage: `url(${background})` }} className="flex flex-col justify-center items-center min-h-screen bg-cover bg-center" >
       <img src={logo} className="h-64 mb-5"/>
