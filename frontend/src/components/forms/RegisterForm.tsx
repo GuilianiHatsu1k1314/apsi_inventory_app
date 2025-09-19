@@ -8,6 +8,7 @@ interface Props {
   onSubmit: () => void;
   loading: boolean;
   error: string | null;
+  registered: boolean;
 }
 
 export default function RegisterForm({
@@ -20,8 +21,9 @@ export default function RegisterForm({
   onSubmit,
   loading,
   error,
+  registered
 }: Props) {
-  return (
+    return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
@@ -73,7 +75,12 @@ export default function RegisterForm({
         disabled={loading}
         className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
       >
-        {loading ? "Registering..." : "Registered!"}
+        {loading
+          ? "Registering..."
+          : registered
+          ? "Registered!"
+          : "Register"
+        }
       </button>
     </form>
   );
