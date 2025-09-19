@@ -71,19 +71,19 @@ export const ReportsPage: React.FC = () => {
 
       {/*Overview*/}
       <div className="grid grid-cols-4 gap-4 mb-8">
-        <div className="p-4 bg-purple-100 rounded-lg">
+        <div className="p-4 bg-purple-200 rounded-lg shadow-md">
           <p className="font-bold">Total Orders</p>
           <p>{orders.length}</p>
         </div>
-        <div className="p-4 bg-green-100 rounded-lg">
+        <div className="p-4 bg-green-200 rounded-lg shadow-md">
           <p className="font-bold">Approved Orders</p>
           <p>{orders.filter(o => o.status === "Approved").length}</p>
         </div>
-        <div className="p-4 bg-red-100 rounded-lg">
+        <div className="p-4 bg-red-200 rounded-lg shadow-md">
           <p className="font-bold">Rejected Orders</p>
           <p>{orders.filter(o => o.status === "Rejected").length}</p>
         </div>
-        <div className="p-4 bg-yellow-100 rounded-lg">
+        <div className="p-4 bg-yellow-200 rounded-lg shadow-md">
           <p className="font-bold">Invoices Issued</p>
           <p>{invoices.length}</p>
         </div>
