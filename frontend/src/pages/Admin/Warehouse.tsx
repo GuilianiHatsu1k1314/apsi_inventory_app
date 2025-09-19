@@ -218,32 +218,32 @@ export const WarehousePage: React.FC = () => {
             </tbody>
           </table>
 
-          <h3 className="text-lg font-semibold mb-2">Add New Item</h3>
+          <h3 className="text-lg font-semibold mt-3 mb-2">Add New Item</h3>
           <div className="flex gap-2 mb-2">
             <input
               type="text"
               placeholder="Item Name"
               value={newItemName}
               onChange={(e) => setNewItemName(e.target.value)}
-              className="border p-2 rounded w-1/3"
+              className="border-2 border-[var(--dali-purple)] p-2 rounded-[16px] outline-none w-1/3"
             />
             <input
               type="number"
               placeholder="Qty"
               value={newItemQty}
               onChange={(e) => setNewItemQty(Number(e.target.value))}
-              className="border p-2 rounded w-1/3"
+              className="border-2 border-[var(--dali-purple)] p-2 rounded-[16px] outline-none w-1/3"
             />
             <input
               type="number"
               placeholder="Price"
               value={newItemPrice}
               onChange={(e) => setNewItemPrice(Number(e.target.value))}
-              className="border p-2 rounded w-1/3"
+              className="border-2 border-[var(--dali-purple)] p-2 rounded-[16px] outline-none w-1/3"
             />
           </div>
           <button
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer"
+            className="bg-[var(--dali-purple)] text-white mt-3 px-4 py-2 rounded hover:bg-purple-700 cursor-pointer"
             onClick={addInventory}
           >
             Add Item

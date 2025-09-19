@@ -127,7 +127,7 @@ export const AccountingPage: React.FC = () => {
     <div className="p-8 flex flex-col items-center">
       <h1 className="text-2xl font-bold mb-6">Accounting Dashboard</h1>
 
-      <div className="max-w-xl bg-white shadow-lg rounded-2xl p-6">
+      <div className="w-xl bg-white shadow-lg rounded-2xl p-6">
         <h2 className="text-xl font-bold mb-4">Charge Approved Orders</h2>
 
         {orders.length === 0 ? (
@@ -139,7 +139,7 @@ export const AccountingPage: React.FC = () => {
               <select
                 value={selectedOrderId ?? ""}
                 onChange={(e) => setSelectedOrderId(Number(e.target.value))}
-                className="border rounded-lg p-2 w-full"
+                className="border-2 border-[var(--dali-purple)] rounded-lg p-2 w-full"
               >
                 {orders.map((o) => (
                   <option key={o.id} value={o.id}>
@@ -150,22 +150,22 @@ export const AccountingPage: React.FC = () => {
             </div>
 
             {selectedOrder && (
-              <table className="w-full text-left border mb-4">
+              <table className="w-full text-left border-colapse border-3 border-[var(--dali-purple))]">
                 <thead>
-                  <tr className="bg-gray-100">
-                    <th className="p-2">Item</th>
-                    <th className="p-2">Qty</th>
-                    <th className="p-2">Price</th>
-                    <th className="p-2">Subtotal</th>
+                  <tr>
+                    <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Item</th>
+                    <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Qty</th>
+                    <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Price</th>
+                    <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Subtotal</th>
                   </tr>
                 </thead>
                 <tbody>
                   {selectedOrder.items.map((item) => (
                     <tr key={item.id} className="border-t">
-                      <td className="p-2">{item.name}</td>
-                      <td className="p-2">{item.quantity}</td>
-                      <td className="p-2">₱{item.price.toFixed(2)}</td>
-                      <td className="p-2">
+                      <td className="p-2 border-2 border-[var(--dali-purple))] ...">{item.name}</td>
+                      <td className="p-2 border-2 border-[var(--dali-purple))] ...">{item.quantity}</td>
+                      <td className="p-2 border-2 border-[var(--dali-purple))] ...">₱{item.price.toFixed(2)}</td>
+                      <td className="p-2 border-2 border-[var(--dali-purple))] ...">
                         ₱{(item.price * item.quantity).toFixed(2)}
                       </td>
                     </tr>
@@ -184,7 +184,7 @@ export const AccountingPage: React.FC = () => {
               <select
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                className="border rounded-lg p-2 w-full"
+                className="border-2 border-[var(--dali-purple)] rounded-lg p-2 w-full"
               >
                 <option>Cash</option>
                 <option>Credit Card</option>

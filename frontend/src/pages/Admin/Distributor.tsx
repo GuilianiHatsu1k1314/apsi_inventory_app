@@ -106,19 +106,19 @@ export const Distributor: React.FC = () => {
         <h2 className="text-xl font-semibold mb-4">Suppliers</h2>
         <button
           onClick={addSupplier}
-          className="mb-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer"
+          className="mb-4 bg-[var(--dali-purple)] text-white px-4 py-2 rounded hover:bg-purple-700 cursor-pointer"
         >
           + Add New Supplier
         </button>
 
-        <table className="w-full border-collapse text-left">
+        <table className="w-full text-left border-colapse border-3 border-[var(--dali-purple))]">
           <thead>
-            <tr className="border-b bg-gray-100">
-              <th className="py-2 px-4">Name</th>
-              <th className="py-2 px-4">Items</th>
-              <th className="py-2 px-4">Amount</th>
-              <th className="py-2 px-4">Price</th>
-              <th className="py-2 px-4">Actions</th>
+            <tr>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Name</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Items</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Amount</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Price</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -127,7 +127,7 @@ export const Distributor: React.FC = () => {
                 key={supplier.id}
                 className="border-b hover:bg-gray-50 transition-colors"
               >
-                <td className="py-2 px-4">
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">
                   <input
                     type="text"
                     value={supplier.name}
@@ -137,7 +137,7 @@ export const Distributor: React.FC = () => {
                     className="border p-1 w-full"
                   />
                 </td>
-                <td className="py-2 px-4">
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">
                   <input
                     type="text"
                     value={supplier.items}
@@ -147,7 +147,7 @@ export const Distributor: React.FC = () => {
                     className="border p-1 w-full"
                   />
                 </td>
-                <td className="py-2 px-4">
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">
                   <input
                     type="number"
                     value={supplier.amount}
@@ -158,7 +158,7 @@ export const Distributor: React.FC = () => {
                     min={1}
                   />
                 </td>
-                <td className="py-2 px-4">
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">
                   <input
                     type="number"
                     value={supplier.price}
@@ -169,10 +169,10 @@ export const Distributor: React.FC = () => {
                     min={0}
                   />
                 </td>
-                <td className="py-2 px-4 flex gap-2">
+                <td className="py-2 px-4 flex justify-evenly gap-2">
                   <button
                     onClick={() => saveSupplier(supplier)}
-                    className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 cursor-pointer"
+                    className="bg-blue-600 text-white px-5 py-1 rounded hover:bg-blue-700 cursor-pointer"
                   >
                     Save
                   </button>
