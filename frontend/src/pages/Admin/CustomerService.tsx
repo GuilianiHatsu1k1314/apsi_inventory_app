@@ -165,7 +165,7 @@ export const CSRPage: React.FC = () => {
         />
         <button
           onClick={handleAddItem}
-          className="bg-blue-600 text-white px-3 py-1 rounded"
+          className="bg-blue-600 text-white px-3 py-1 rounded cursor-pointer"
         >
           Add Item
         </button>
@@ -185,7 +185,7 @@ export const CSRPage: React.FC = () => {
       {/*Submit Order*/}
       <button
         onClick={handleSubmitOrder}
-        className="bg-green-600 text-white px-4 py-2 rounded mb-4"
+        className="bg-green-600 text-white px-4 py-2 rounded mb-4 cursor-pointer"
       >
         Submit Order
       </button>

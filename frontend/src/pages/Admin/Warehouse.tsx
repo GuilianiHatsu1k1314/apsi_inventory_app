@@ -176,19 +176,19 @@ export const WarehousePage: React.FC = () => {
       {/* Tabs */}
       <div className="flex gap-4 mb-6">
         <button
-          className={`px-4 py-2 rounded ${activeTab === "inventory" ? "bg-purple-600 text-white" : "bg-gray-200"}`}
+          className={`px-4 py-2 rounded cursor-pointer ${activeTab === "inventory" ? "bg-purple-600 text-white" : "bg-gray-200"}`}
           onClick={() => setActiveTab("inventory")}
         >
           Inventory Management
         </button>
         <button
-          className={`px-4 py-2 rounded ${activeTab === "received" ? "bg-purple-600 text-white" : "bg-gray-200"}`}
+          className={`px-4 py-2 rounded cursor-pointer ${activeTab === "received" ? "bg-purple-600 text-white" : "bg-gray-200"}`}
           onClick={() => setActiveTab("received")}
         >
           Received Goods
         </button>
         <button
-          className={`px-4 py-2 rounded ${activeTab === "orders" ? "bg-purple-600 text-white" : "bg-gray-200"}`}
+          className={`px-4 py-2 rounded cursor-pointer ${activeTab === "orders" ? "bg-purple-600 text-white" : "bg-gray-200"}`}
           onClick={() => setActiveTab("orders")}
         >
           Fulfill Orders
@@ -243,7 +243,7 @@ export const WarehousePage: React.FC = () => {
             />
           </div>
           <button
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer"
             onClick={addInventory}
           >
             Add Item
@@ -277,19 +277,19 @@ export const WarehousePage: React.FC = () => {
                     {item.status === "Pending" && (
                       <>
                         <button
-                          className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700"
+                          className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700 cursor-pointer"
                           onClick={() => updateReceivedStatus(item.id, "Good")}
                         >
                           Good
                         </button>
                         <button
-                          className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                          className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 cursor-pointer"
                           onClick={() => updateReceivedStatus(item.id, "Spoiled")}
                         >
                           Spoiled
                         </button>
                         <button
-                          className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
+                          className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 cursor-pointer"
                           onClick={() => updateReceivedStatus(item.id, "Rejected")}
                         >
                           Rejected
@@ -322,7 +322,7 @@ export const WarehousePage: React.FC = () => {
                 ))}
               </ul>
               <button
-                className="mt-2 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                className="mt-2 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 cursor-pointer"
                 onClick={() => fulfillOrder(order)}
               >
                 Fulfill Order

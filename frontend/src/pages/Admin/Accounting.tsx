@@ -195,7 +195,7 @@ export const AccountingPage: React.FC = () => {
 
             <button
               onClick={handleCharge}
-              className="w-full bg-purple-600 text-white p-3 rounded-lg hover:bg-purple-700"
+              className="w-full bg-purple-600 text-white p-3 rounded-lg hover:bg-purple-700 cursor-pointer"
             >
               Charge Customer
             </button>
