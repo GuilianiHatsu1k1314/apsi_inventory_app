@@ -152,7 +152,7 @@ const useAggregatedOrders = () => {
         const parsedItems =
           typeof row.items === "string" ? JSON.parse(row.items) : row.items;
 
-        parsedItems.forEach((item) => {
+        parsedItems.forEach((item:any) => {
           agg[item.name] = (agg[item.name] || 0) + (item.quantity ?? 0);
         });
       });
