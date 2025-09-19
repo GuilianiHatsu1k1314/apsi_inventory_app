@@ -36,7 +36,7 @@ export const NavBar = () => {
                     className={({ isActive }) =>
                       `block pl-5 text-xl py-2 ${
                         isActive
-                          ? "bg-[var(--dali-purple)] text-white"
+                          ? "bg-[var(--dali-purple)] text-white font-semibold"
                           : "hover:bg-[var(--dali-purple)] hover:text-white"
                       }`
                     }
@@ -53,7 +53,7 @@ export const NavBar = () => {
               className={({ isActive }) =>
                       `block pl-5 text-xl py-2 ${
                         isActive
-                          ? "bg-[var(--dali-purple)] text-white"
+                          ? "bg-[var(--dali-purple)] text-white font-semibold"
                           : "hover:bg-[var(--dali-purple)] hover:text-white"
                       }`
                     }
