@@ -66,7 +66,7 @@ export const RegisterPage = () => {
         onSubmit={handleRegister}
         loading={loading}
         error={error}
-        registered
+        registered={false}
       />
     </main>
   );
