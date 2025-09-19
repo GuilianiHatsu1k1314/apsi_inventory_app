@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-// Local OrderItem type
+//Local OrderItem type
 interface OrderItem {
   id: number;
   name: string;
@@ -8,7 +8,7 @@ interface OrderItem {
   price: number;
 }
 
-// Local Order type
+//Local Order type
 interface Order {
   id: number;
   customer: string;
@@ -26,7 +26,7 @@ export const CSRPage: React.FC = () => {
     if (!itemName) return;
     setItems([
       ...items,
-      { id: items.length + 1, name: itemName, quantity, price: 100 }, // default price
+      { id: items.length + 1, name: itemName, quantity, price: 100 }, //default price
     ]);
     setItemName("");
     setQuantity(1);
