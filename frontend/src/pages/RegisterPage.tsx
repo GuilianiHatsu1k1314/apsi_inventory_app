@@ -2,6 +2,8 @@ import RegisterForm from "../components/forms/RegisterForm";
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/SupabaseClient";
 import logo from "../assets/logo.png";
+import background from '../assets/login-background.png'
+
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -53,7 +55,7 @@ export const RegisterPage = () => {
   },[]);
 
   return (
-    <main className="h-screen flex flex-col justify-center items-center space-y-4">
+    <main style={{ backgroundImage: `url(${background})` }} className="h-screen flex flex-col justify-center items-center space-y-4 bg-cover bg-center">
       <img src={logo} className="h-82" alt="logo" />
 
       <RegisterForm
