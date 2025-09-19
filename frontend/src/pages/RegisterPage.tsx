@@ -6,7 +6,7 @@ import logo from "../assets/logo.png";
 export const RegisterPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [role, setRole] = useState<string>("CSR");
+  const [role, setRole] = useState<string>(""); //Start empty, must select a role
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,10 +21,13 @@ export const RegisterPage = () => {
     }
 
     try {
-      //Sign up the user
+      //Sign up the user then attach a role in metadata
       const { error: signUpError } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          data: { role }, //Role goes into raw_user_meta_data
+        },
       });
 
       if (signUpError) {
@@ -34,7 +37,7 @@ export const RegisterPage = () => {
       }
 
       alert(
-        "Registration has been confirmed. Please check your email and confirm the account creation. NO EMAILS ARE SENT IF EMAIL ALREADY EXISTS."
+        "Registration successful! Please check your email to confirm your account."
       );
     } catch (err) {
       console.error(err);

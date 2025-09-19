@@ -1,56 +1,52 @@
-import LoginForm from "../components/forms/LoginForm";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "../lib/SupabaseClient";
-import logo from "../assets/logo.png";
+import { useAuth } from "../context/AuthContext";
+import LoginForm from "../components/forms/LoginForm";
 
-export const LoginPage = () => {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+export default function LoginPage() {
+  const { login } = useAuth();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleSubmit = async () => {
     setLoading(true);
     setError(null);
-
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: username,
-        password,
-      });
+      await login(username, password);
 
-      if (error) {
-        setError(error.message);
-      } else if (data.user) {
-        console.log("Logged in:", data.user);
-        alert(`Welcome ${data.user.email}!`);
-        
-        //Redirect
-        navigate("/app"); //will add logic to this in the future, depending on the roles.
+      const role = localStorage.getItem("role");
+      if (role === "Customer Service") {
+        window.location.href = "/app/customer-service";
+      } else if (role === "Admin") {
+        window.location.href = "/app";
+      } else if (role === "Team Leader") {
+        window.location.href = "/app/team-lead";
+      } else if (role === "Warehouse") {
+        window.location.href = "/app/warehouse";
+      } else if (role === "Accounting") {
+        window.location.href = "/app/accounting";
+      } else {
+        window.location.href = "/unauthorized";
       }
-    } catch (err) {
-      console.error(err);
-      setError("Unexpected error. Check console.");
+    } catch (err: any) {
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className="h-screen flex flex-col justify-center items-center space-y-4">
-      <img src={logo} className="h-82" alt="logo" />
-
+    <div className="flex justify-center items-center min-h-screen">
       <LoginForm
         username={username}
         setUsername={setUsername}
         password={password}
         setPassword={setPassword}
-        onSubmit={handleLogin}
+        onSubmit={handleSubmit}
         loading={loading}
         error={error}
       />
-    </main>
+    </div>
   );
-};
+}
