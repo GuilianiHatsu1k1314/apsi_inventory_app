@@ -199,20 +199,20 @@ export const WarehousePage: React.FC = () => {
       {activeTab === "inventory" && (
         <div className="bg-white shadow-lg rounded-lg p-6">
           <h2 className="text-xl font-bold mb-4">Inventory</h2>
-          <table className="w-full text-left border mb-4">
+          <table className="w-full text-left border-colapse border-3 border-[var(--dali-purple))]">
             <thead>
               <tr className="bg-gray-100">
-                <th className="p-2">Item</th>
-                <th className="p-2">Qty</th>
-                <th className="p-2">Price</th>
+                <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Item</th>
+                <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Qty</th>
+                <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Price</th>
               </tr>
             </thead>
             <tbody>
               {inventory.map((item) => (
                 <tr key={item.id} className="border-t">
-                  <td className="p-2">{item.name}</td>
-                  <td className="p-2">{item.quantity}</td>
-                  <td className="p-2">₱{item.price.toFixed(2)}</td>
+                  <td className="p-2 border-2 border-[var(--dali-purple))] ...">{item.name}</td>
+                  <td className="p-2 border-2 border-[var(--dali-purple))] ...">{item.quantity}</td>
+                  <td className="p-2 border-2 border-[var(--dali-purple))] ...">₱{item.price.toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>
@@ -256,34 +256,34 @@ export const WarehousePage: React.FC = () => {
         <div className="bg-white shadow-lg rounded-lg p-6">
           <h2 className="text-xl font-bold mb-4">Received Goods</h2>
           {receivedGoods.length === 0 && <p>No received items.</p>}
-          <table className="w-full text-left border">
+          <table className="w-full text-left border-colapse border-3 border-[var(--dali-purple))]">
             <thead>
-              <tr className="bg-gray-100">
-                <th className="p-2">Item</th>
-                <th className="p-2">Qty</th>
-                <th className="p-2">Price</th>
-                <th className="p-2">Status</th>
-                <th className="p-2">Action</th>
+              <tr>
+                <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Item</th>
+                <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Qty</th>
+                <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Price</th>
+                <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Status</th>
+                <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Action</th>
               </tr>
             </thead>
             <tbody>
               {receivedGoods.map((item) => (
                 <tr key={item.id} className="border-t">
-                  <td className="p-2">{item.name}</td>
-                  <td className="p-2">{item.quantity}</td>
-                  <td className="p-2">₱{item.price.toFixed(2)}</td>
-                  <td className="p-2">{item.status}</td>
-                  <td className="p-2 flex gap-2">
+                  <td className="p-2 border-2 border-[var(--dali-purple))] ...">{item.name}</td>
+                  <td className="p-2 border-2 border-[var(--dali-purple))] ...">{item.quantity}</td>
+                  <td className="p-2 border-2 border-[var(--dali-purple))] ...">₱{item.price.toFixed(2)}</td>
+                  <td className="p-2 border-2 border-[var(--dali-purple))] ...">{item.status}</td>
+                  <td className="p-2 border-2 border-[var(--dali-purple))] ...">
                     {item.status === "Pending" && (
-                      <>
+                      <div className="flex justify-evenly">
                         <button
-                          className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700 cursor-pointer"
+                          className="bg-green-600 text-white px-5 py-1 rounded hover:bg-green-700 cursor-pointer"
                           onClick={() => updateReceivedStatus(item.id, "Good")}
                         >
                           Good
                         </button>
                         <button
-                          className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 cursor-pointer"
+                          className="bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-700 cursor-pointer"
                           onClick={() => updateReceivedStatus(item.id, "Spoiled")}
                         >
                           Spoiled
@@ -294,7 +294,7 @@ export const WarehousePage: React.FC = () => {
                         >
                           Rejected
                         </button>
-                      </>
+                      </div>
                     )}
                   </td>
                 </tr>
@@ -310,9 +310,9 @@ export const WarehousePage: React.FC = () => {
           <h2 className="text-xl font-bold mb-4">Orders to Fulfill</h2>
           {orders.length === 0 && <p>No charged orders to fulfill.</p>}
           {orders.map((order) => (
-            <div key={order.id} className="border p-3 mb-3 rounded">
+            <div key={order.id} className="border-3 border-[var(--dali-purple)] p-5 mb-3 rounded-[16px] p-3 mb-3 rounded">
               <p>
-                <b>Customer:</b> {order.customer}
+                <b className="text-purple-900">Customer:</b> {order.customer}
               </p>
               <ul className="list-disc pl-5">
                 {order.items.map((i) => (
