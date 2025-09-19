@@ -32,6 +32,7 @@ export const NavBar = () => {
                 <li key={link.to}>
                   <NavLink
                     to={link.to}
+                    end
                     className={({ isActive }) =>
                       `block pl-5 text-xl py-2 ${
                         isActive
