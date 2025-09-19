@@ -14,7 +14,7 @@ export const NavBar = () => {
   // Define which links are visible per role
   const links = [
     { to: "/app", label: "Dashboard", roles: ["Admin", "Warehouse", "Customer Service", "Team Lead", "Accounting"] },
-    { to: "/app/customer", label: "Customer", roles: ["Admin", "Customer Service"] },
+    //{ to: "/app/customer", label: "Customer", roles: ["Admin", "Customer Service"] },
     { to: "/app/distributor", label: "Distributor", roles: ["Admin", "Warehouse"] },
     { to: "/app/warehouse", label: "Warehouse Module", roles: ["Admin", "Warehouse"] },
     { to: "/app/accounting", label: "Accounting", roles: ["Admin", "Accounting"] },
