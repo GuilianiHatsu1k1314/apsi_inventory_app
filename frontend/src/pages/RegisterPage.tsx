@@ -1,5 +1,5 @@
 import RegisterForm from "../components/forms/RegisterForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "../lib/SupabaseClient";
 import logo from "../assets/logo.png";
 
@@ -47,6 +47,10 @@ export const RegisterPage = () => {
       setLoading(false);
     }
   };
+
+  useEffect(()=>{
+    document.title = "Register";
+  },[]);
 
   return (
     <main className="h-screen flex flex-col justify-center items-center space-y-4">
