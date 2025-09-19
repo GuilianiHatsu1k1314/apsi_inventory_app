@@ -92,20 +92,20 @@ export const ReportsPage: React.FC = () => {
       {/*Orders Table*/}
       <div className="mb-8">
         <h2 className="text-xl font-bold mb-2">CSR Orders</h2>
-        <table className="w-full text-left border">
+        <table className="w-full text-left border-colapse border-3 border-[var(--dali-purple))]">
           <thead>
             <tr className="bg-gray-100">
-              <th className="p-2">Customer</th>
-              <th className="p-2">Status</th>
-              <th className="p-2">Date</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Customer</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Status</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Date</th>
             </tr>
           </thead>
           <tbody>
             {orders.map(order => (
               <tr key={order.id} className="border-t">
-                <td className="p-2">{order.customer}</td>
-                <td className="p-2">{order.status}</td>
-                <td className="p-2">{new Date(order.created_at).toLocaleDateString()}</td>
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">{order.customer}</td>
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">{order.status}</td>
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">{new Date(order.created_at).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>
@@ -115,22 +115,22 @@ export const ReportsPage: React.FC = () => {
       {/*Invoices Table*/}
       <div className="mb-8">
         <h2 className="text-xl font-bold mb-2">Accounting Charges</h2>
-        <table className="w-full text-left border">
+        <table className="w-full text-left border-colapse border-3 border-[var(--dali-purple))]">
           <thead>
             <tr className="bg-gray-100">
-              <th className="p-2">Customer</th>
-              <th className="p-2">Total</th>
-              <th className="p-2">Payment Method</th>
-              <th className="p-2">Date</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Customer</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Total</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Payment Method</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Date</th>
             </tr>
           </thead>
           <tbody>
             {invoices.map((inv, i) => (
               <tr key={i} className="border-t">
-                <td className="p-2">{inv.customer}</td>
-                <td className="p-2">₱{inv.total.toFixed(2)}</td>
-                <td className="p-2">{inv.payment_method}</td>
-                <td className="p-2">{new Date(inv.created_at).toLocaleDateString()}</td>
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">{inv.customer}</td>
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">₱{inv.total.toFixed(2)}</td>
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">{inv.payment_method}</td>
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">{new Date(inv.created_at).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>
@@ -140,22 +140,22 @@ export const ReportsPage: React.FC = () => {
       {/*Inventory Changes*/}
       <div>
         <h2 className="text-xl font-bold mb-2">Warehouse Inventory Changes</h2>
-        <table className="w-full text-left border">
+        <table className="w-full text-left border-colapse border-3 border-[var(--dali-purple))]">
           <thead>
             <tr className="bg-gray-100">
-              <th className="p-2">Item</th>
-              <th className="p-2">Quantity</th>
-              <th className="p-2">Price</th>
-              <th className="p-2">Date</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Item</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Quantity</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Price</th>
+              <th className="p-2 bg-purple-300 border-2 border-[var(--dali-purple))] ...">Date</th>
             </tr>
           </thead>
           <tbody>
             {inventoryChanges.map(change => (
               <tr key={change.id} className="border-t">
-                <td className="p-2">{change.name}</td>
-                <td className="p-2">{change.quantity}</td>
-                <td className="p-2">₱{change.price.toFixed(2)}</td>
-                <td className="p-2">{new Date(change.created_at).toLocaleDateString()}</td>
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">{change.name}</td>
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">{change.quantity}</td>
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">₱{change.price.toFixed(2)}</td>
+                <td className="p-2 border-2 border-[var(--dali-purple))] ...">{new Date(change.created_at).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>
