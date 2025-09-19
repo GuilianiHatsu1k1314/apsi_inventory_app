@@ -75,7 +75,7 @@ const TopCustomer = () => {
             <li
               key={i}
               className={`flex justify-between py-2 ${
-                i === 0 ? "font-bold text-blue-600" : ""
+                i === 0 ? "font-bold text-[var(--dali-purple)]" : ""
               }`}
             >
               <span>{cust.name}</span>

@@ -83,9 +83,9 @@ export const TeamLeaderPage: React.FC = () => {
       {!loading && pendingOrders.length === 0 && <p>No pending orders.</p>}
 
       {pendingOrders.map((order) => (
-        <div key={order.id} className="border p-3 mb-3 rounded">
+        <div key={order.id} className="border-3 border-[var(--dali-purple)] p-3 mb-3 rounded-[16px] p-3 mb-3">
           <p>
-            <b>Customer:</b> {order.customer}
+            <b className="text-purple-900">Customer:</b> {order.customer}
           </p>
           <ul className="list-disc pl-5">
             {order.items.map((item) => (
