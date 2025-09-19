@@ -57,8 +57,9 @@ export default function RegisterForm({
         className="border-2 p-2 rounded-lg"
       >
         <option value="">-- Select Role --</option>
-        <option value="CSR">CSR</option>
-        <option value="Team Leader">Team Leader</option>
+        <option value="Admin">Admin</option>
+        <option value="Customer Service">Customer Service</option>
+        <option value="Team Lead">Team Lead</option>
         <option value="Accounting">Accounting</option>
         <option value="Warehouse">Warehouse</option>
       </select>

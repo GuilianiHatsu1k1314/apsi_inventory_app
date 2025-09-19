@@ -16,11 +16,12 @@ export default function LoginPage() {
       await login(username, password);
 
       const role = localStorage.getItem("role");
+
       if (role === "Customer Service") {
         window.location.href = "/app/customer-service";
       } else if (role === "Admin") {
         window.location.href = "/app";
-      } else if (role === "Team Leader") {
+      } else if (role === "Team Lead") {
         window.location.href = "/app/team-lead";
       } else if (role === "Warehouse") {
         window.location.href = "/app/warehouse";
@@ -29,6 +30,7 @@ export default function LoginPage() {
       } else {
         window.location.href = "/unauthorized";
       }
+
     } catch (err: any) {
       setError(err.message);
     } finally {

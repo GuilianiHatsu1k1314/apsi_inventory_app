@@ -4,7 +4,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 
-import LoginPage from "./pages/LoginPage";          // fixed (default export)
+import LoginPage from "./pages/LoginPage";
 import { InventoryAppPage } from "./pages/InventoryAppPage";
 import { Dashboard } from "./pages/Admin/Dashboard";
 import { Customer } from "./pages/Admin/Customer";
@@ -15,7 +15,7 @@ import { RegisterPage } from "./pages/RegisterPage";
 import { CSRPage } from "./pages/Admin/CustomerService";
 import { TeamLeaderPage } from "./pages/Admin/TeamLead";
 import { ReportsPage } from "./pages/Admin/Reports";
-import RoleRoute from "./routes/RoleRoutes";         // fixed (singular filename)
+import RoleRoute from "./routes/RoleRoutes";
 import Unauthorized from "./pages/Unauthorized";
 
 const router = createBrowserRouter([
@@ -82,7 +82,7 @@ const router = createBrowserRouter([
       {
         path: "team-lead",
         element: (
-          <RoleRoute allowedRoles={["Admin", "Team Leader"]}>
+          <RoleRoute allowedRoles={["Admin", "Team Lead"]}>
             <TeamLeaderPage />
           </RoleRoute>
         ),
