@@ -10,6 +10,7 @@ export const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+
   const handleRegister = async () => {
     setLoading(true);
     setError(null);
@@ -61,6 +62,7 @@ export const RegisterPage = () => {
         onSubmit={handleRegister}
         loading={loading}
         error={error}
+        registered
       />
     </main>
   );
