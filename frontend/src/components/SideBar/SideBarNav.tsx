@@ -20,6 +20,7 @@ export const NavBar = () => {
     { to: "/app/accounting", label: "Accounting", roles: ["Admin", "Accounting"] },
     { to: "/app/customer-service", label: "Customer Service", roles: ["Admin", "Customer Service"] },
     { to: "/app/team-lead", label: "Team Lead", roles: ["Admin", "Team Lead"] },
+    { to: "/register", label: "Create Account", roles: ["Admin"] },
   ];
 
   return (
