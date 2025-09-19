@@ -62,6 +62,10 @@ export const AccountingPage: React.FC = () => {
     fetchOrders();
   }, []);
 
+  useEffect(()=>{
+    document.title = "Accounting";
+  },[]);
+
   const selectedOrder = orders.find((o) => o.id === selectedOrderId) || null;
 
   //Auto-select first order, for easy flow

@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../lib/SupabaseClient";
 
 export const Dashboard = () => {
+  useEffect(()=>{
+    document.title = "Dashboard";
+  },[]);
   return (
     <main className="p-6 w-full">
       <div className="grid grid-cols-3 gap-6">

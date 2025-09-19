@@ -27,6 +27,10 @@ export const Distributor: React.FC = () => {
     fetchSuppliers();
   }, []);
 
+  useEffect(()=>{
+    document.title = "Distributor";
+  },[]);
+
   //Handle input changes
   const handleChange = (
     index: number,

@@ -52,6 +52,9 @@ export const TeamLeaderPage: React.FC = () => {
     fetchOrders();
   }, []);
 
+  useEffect(()=>{
+    document.title = "Team Leader";
+  },[]);
   //Approve / reject the order - Team Leader
   const updateOrderStatus = async (orderId: number, status: Order["status"]) => {
     const { error } = await supabase

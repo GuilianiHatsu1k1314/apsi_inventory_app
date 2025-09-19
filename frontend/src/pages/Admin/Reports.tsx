@@ -32,6 +32,10 @@ export const ReportsPage: React.FC = () => {
     fetchData();
   }, []);
 
+  useEffect(()=>{
+    document.title = "Reports";
+  },[]);
+
   const fetchData = async () => {
     //Orders table
     const { data: ordersData, error: ordersError } = await supabase

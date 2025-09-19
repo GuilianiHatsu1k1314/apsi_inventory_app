@@ -55,6 +55,10 @@ export const CSRPage: React.FC = () => {
     fetchData();
   }, []);
 
+  useEffect(()=>{
+    document.title = "Customer Service";
+  },[]);
+
   //Adds item from dropdown
   const handleAddItem = () => {
     if (selectedItemId === "" || quantity <= 0) return;

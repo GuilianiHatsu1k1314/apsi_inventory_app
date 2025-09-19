@@ -76,6 +76,10 @@ export const WarehousePage: React.FC = () => {
     fetchData();
   }, []);
 
+  useEffect(()=>{
+    document.title = "Warehouse";
+  },[]);
+
   // Add new inventory item manually
   const addInventory = async () => {
     if (!newItemName || newItemQty <= 0 || newItemPrice <= 0) return;
