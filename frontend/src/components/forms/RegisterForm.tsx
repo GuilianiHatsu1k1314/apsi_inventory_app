@@ -38,7 +38,10 @@ export default function RegisterForm({
         required
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="border-2 p-2 rounded-lg"
+        className="border-3 p-2 font-semibold
+                   placeholder-[var(--dali-purple)]
+                   border-[var(--dali-purple)] rounded-[16px]
+                   focus:border-violet-600 focus:outline-none"
       />
 
       {/* Password */}
@@ -48,7 +51,10 @@ export default function RegisterForm({
         required
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="border-2 p-2 rounded-lg"
+        className="border-3 p-2 font-semibold
+                   placeholder-[var(--dali-purple)]
+                   border-[var(--dali-purple)] rounded-[16px]
+                   focus:border-violet-600 focus:outline-none"
       />
 
       {/* Role Dropdown */}
@@ -56,7 +62,10 @@ export default function RegisterForm({
         required
         value={role}
         onChange={(e) => setRole(e.target.value)}
-        className="border-2 p-2 rounded-lg"
+        className="border-3 p-2 font-semibold
+                   placeholder-[var(--dali-purple)]
+                   border-[var(--dali-purple)] rounded-[5px]
+                   focus:border-violet-600 focus:outline-none"
       >
         <option value="">-- Select Role --</option>
         <option value="Admin">Admin</option>
