@@ -139,7 +139,7 @@ export const CSRPage: React.FC = () => {
         placeholder="Customer Name"
         value={customer}
         onChange={(e) => setCustomer(e.target.value)}
-        className="border p-2 mr-2 mb-2"
+        className="border-2 border-[var(--dali-purple)] rounded-[16px] outline-none p-2 mr-2 mb-2"
       />
 
       {/*Item Dropdown*/}
@@ -147,7 +147,7 @@ export const CSRPage: React.FC = () => {
         <select
           value={selectedItemId}
           onChange={(e) => setSelectedItemId(e.target.value ? Number(e.target.value) : "")}
-          className="border p-2 flex-1"
+          className="border-2 border-[var(--dali-purple)] rounded-[16px] outline-none p-2 flex-1"
         >
           <option value="">Select Item</option>
           {inventory.map((inv) => (
@@ -161,7 +161,7 @@ export const CSRPage: React.FC = () => {
           placeholder="Quantity"
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
-          className="border p-2 w-24"
+          className="border-2 border-[var(--dali-purple)] rounded-[16px] outline-none p-2 w-24"
         />
         <button
           onClick={handleAddItem}
@@ -185,7 +185,7 @@ export const CSRPage: React.FC = () => {
       {/*Submit Order*/}
       <button
         onClick={handleSubmitOrder}
-        className="bg-green-600 text-white px-4 py-2 rounded mb-4 cursor-pointer"
+        className="bg-[var(--dali-purple)] text-white px-4 py-2 rounded mb-4 cursor-pointer"
       >
         Submit Order
       </button>
@@ -194,12 +194,12 @@ export const CSRPage: React.FC = () => {
       <h2 className="text-xl font-semibold mt-6 mb-2">Submitted Orders</h2>
       {orders.length === 0 && <p>No orders submitted yet.</p>}
       {orders.map((order) => (
-        <div key={order.id} className="border p-3 mb-3 rounded">
+        <div key={order.id} className="border-3 border-[var(--dali-purple)] p-3 mb-3 rounded-[16px]">
           <p>
-            <b>Customer:</b> {order.customer}
+            <b className="text-purple-900">Customer:</b> {order.customer}
           </p>
           <p>
-            <b>Status:</b> {order.status}
+            <b className="text-purple-900">Status:</b> {order.status}
           </p>
           <ul className="list-disc pl-5">
             {order.items.map((i) => (
